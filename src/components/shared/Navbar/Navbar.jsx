@@ -6,7 +6,7 @@ const Navbar = () => {
   const links = (
     <li>
       <NavLink
-        to=""
+        to="/donation-requests"
         className="text-accent hover:text-primary text-md lg:text-xl font-semibold"
       >
         Donation Requests

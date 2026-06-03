@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import bannerImg from "../../assets/banner.png";
 
 const Banner = () => {
@@ -25,8 +26,16 @@ const Banner = () => {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="custom-btn-primary">Join As Donor</button>
-              <button className="custom-btn-outline">Search Donors</button>
+              <NavLink to="/register">
+                <button className="custom-btn-primary w-44 h-12">
+                  <span>Join As Donor</span>
+                </button>
+              </NavLink>
+              <NavLink to="/search-donors">
+                <button className="custom-btn-outline">
+                  <span>Search Donors</span>
+                </button>
+              </NavLink>
             </div>
           </div>
         </div>

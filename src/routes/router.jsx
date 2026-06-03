@@ -3,6 +3,8 @@ import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import SearchDonors from "../pages/SearchDonors/SearchDonors";
+import DonationRequests from "../pages/DonationRequests/DonationRequests";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +16,14 @@ export const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "search-donors",
+        Component: SearchDonors,
+      },
+      {
+        path: "donation-requests",
+        Component: DonationRequests,
+      },
+      {
         path: "login",
         Component: Login,
       },
@@ -21,6 +31,6 @@ export const router = createBrowserRouter([
         path: "register",
         Component: Register,
       },
-    ]
+    ],
   },
 ]);
