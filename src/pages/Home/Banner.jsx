@@ -3,7 +3,7 @@ import bannerImg from "../../assets/banner.png";
 
 const Banner = () => {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-no-repeat bg-center md:bg-right bg-contain opacity-[0.38]"

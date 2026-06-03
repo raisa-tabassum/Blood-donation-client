@@ -5,6 +5,11 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import SearchDonors from "../pages/SearchDonors/SearchDonors";
 import DonationRequests from "../pages/DonationRequests/DonationRequests";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Profile from "../pages/Dashboard/Profile/Profile";
+import CreateDonationRequest from "../pages/Dashboard/Donor/CreateDonationRequest";
+import MyDonationRequests from "../pages/Dashboard/Donor/MyDonationRequests";
+import Funding from "../pages/Funding/Funding";
 
 export const router = createBrowserRouter([
   {
@@ -24,12 +29,38 @@ export const router = createBrowserRouter([
         Component: DonationRequests,
       },
       {
+        path: "donation-requests",
+        Component: DonationRequests,
+      },
+      {
         path: "login",
         Component: Login,
       },
       {
         path: "register",
         Component: Register,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    Component: DashboardLayout,
+    children: [
+      {
+        path: "profile",
+        Component: Profile,
+      },
+      {
+        path: "create-donation-request",
+        Component: CreateDonationRequest,
+      },
+      {
+        path: "my-donation-request",
+        Component: MyDonationRequests,
+      },
+      {
+        path: "funding",
+        Component: Funding,
       },
     ],
   },

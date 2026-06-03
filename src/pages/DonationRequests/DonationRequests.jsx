@@ -32,7 +32,7 @@ const DonationRequests = () => {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-16">
+    <section className="min-h-screen bg-[#FFF5F5] px-4 py-16">
       {/* Heading */}
       <div className="text-center mb-12">
         <h2 className="heading-font text-3xl md:text-5xl font-bold text-accent">
@@ -46,16 +46,16 @@ const DonationRequests = () => {
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden lg:block overflow-x-auto bg-white rounded-2xl shadow-md">
+      <div className="hidden lg:block max-w-6xl mx-auto overflow-x-auto bg-white rounded-2xl shadow-md">
         <table className="table">
           <thead>
-            <tr className="bg-red-50 text-accent">
+            <tr className="bg-blue-50 text-accent">
               <th>Recipient</th>
               <th>Location</th>
               <th>Blood Group</th>
               <th>Date</th>
               <th>Time</th>
-              <th>Actions</th>
+              <th>Action</th>
             </tr>
           </thead>
 
