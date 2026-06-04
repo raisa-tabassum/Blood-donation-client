@@ -55,7 +55,7 @@ const AllUsers = () => {
         <div className="overflow-x-auto">
           <table className="table">
             <thead>
-              <tr>
+              <tr className="text-accent">
                 <th>Avatar</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -114,7 +114,7 @@ const AllUsers = () => {
 
                       <ul
                         tabIndex={0}
-                        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                        className="dropdown-content z-1 menu p-2 shadow bg-base-100 rounded-box w-52"
                       >
                         {/* Block User */}
                         <li>
