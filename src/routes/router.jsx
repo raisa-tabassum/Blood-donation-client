@@ -10,6 +10,8 @@ import Profile from "../pages/Dashboard/Profile/Profile";
 import CreateDonationRequest from "../pages/Dashboard/Donor/CreateDonationRequest";
 import MyDonationRequests from "../pages/Dashboard/Donor/MyDonationRequests";
 import Funding from "../pages/Funding/Funding";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import AllBloodDonationRequest from "../pages/Dashboard/Admin/AllBloodDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +63,14 @@ export const router = createBrowserRouter([
       {
         path: "funding",
         Component: Funding,
+      },
+      {
+        path: "all-users",
+        Component: AllUsers,
+      },
+      {
+        path: "all-donation-request",
+        Component: AllBloodDonationRequest,
       },
     ],
   },

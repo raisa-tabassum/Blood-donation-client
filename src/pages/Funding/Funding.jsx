@@ -24,12 +24,11 @@ const Funding = () => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6">
-
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-          <h2 className="heading-font text-3xl font-bold text-accent">
+          <h2 className="heading-font text-3xl font-bold text-accent text-center md:text-start">
             Funding
           </h2>
           <p className="text-gray-500 mt-1">
@@ -43,35 +42,35 @@ const Funding = () => {
         </button>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="table">
-
-          <thead>
-            <tr className="text-accent">
-              <th>No.</th>
-              <th>Donor Name</th>
-              <th>Amount</th>
-              <th>Funding Date</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {funds.map((fund, index) => (
-              <tr key={fund.id}>
-                <td>{index + 1}</td>
-                <td>{fund.name}</td>
-                <td>
-                  <span className="font-semibold text-primary">
-                    ৳ {fund.amount}
-                  </span>
-                </td>
-                <td>{fund.date}</td>
+      <div className="bg-white rounded-2xl shadow-md p-6">
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr className="text-accent">
+                <th>No.</th>
+                <th>Donor Name</th>
+                <th>Amount</th>
+                <th>Funding Date</th>
               </tr>
-            ))}
-          </tbody>
+            </thead>
 
-        </table>
+            <tbody>
+              {funds.map((fund, index) => (
+                <tr key={fund.id}>
+                  <td>{index + 1}</td>
+                  <td>{fund.name}</td>
+                  <td>
+                    <span className="font-semibold text-primary">
+                      ৳ {fund.amount}
+                    </span>
+                  </td>
+                  <td>{fund.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

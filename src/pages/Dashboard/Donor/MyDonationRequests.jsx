@@ -41,17 +41,17 @@ const MyDonationRequests = () => {
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <h2 className="heading-font text-3xl font-bold text-accent">
+        <h2 className="heading-font text-2xl md:text-3xl font-bold text-accent">
           My Donation Requests
         </h2>
 
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="select select-bordered w-full md:w-56"
+          className="select select-bordered w-full md:w-56 rounded-xl"
         >
           <option value="">All Status</option>
           <option value="pending">Pending</option>
@@ -60,47 +60,48 @@ const MyDonationRequests = () => {
           <option value="canceled">Canceled</option>
         </select>
       </div>
-
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr className=" text-primary">
-              <th>Recipient</th>
-              <th>Location</th>
-              <th>Blood Group</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {requests.map((request) => (
-              <tr key={request.id}>
-                <td>{request.recipient}</td>
-
-                <td>{request.location}</td>
-
-                <td>{request.bloodGroup}</td>
-
-                <td>{request.date}</td>
-
-                <td>
-                  <span className={getStatusClass(request.status)}>
-                    {request.status}
-                  </span>
-                </td>
-
-                <td>
-                  <button className="btn btn-sm btn-outline btn-primary">
-                    View Details
-                  </button>
-                </td>
+      <div className="bg-white rounded-2xl shadow-md p-6">
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr className="text-primary">
+                <th>Recipient</th>
+                <th>Location</th>
+                <th>Blood Group</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {requests.map((request) => (
+                <tr key={request.id}>
+                  <td>{request.recipient}</td>
+
+                  <td>{request.location}</td>
+
+                  <td>{request.bloodGroup}</td>
+
+                  <td>{request.date}</td>
+
+                  <td>
+                    <span className={getStatusClass(request.status)}>
+                      {request.status}
+                    </span>
+                  </td>
+
+                  <td>
+                    <button className="btn btn-sm btn-outline btn-primary">
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

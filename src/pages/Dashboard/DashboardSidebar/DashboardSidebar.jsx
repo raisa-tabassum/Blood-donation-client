@@ -81,7 +81,7 @@ const DashboardSidebar = () => {
 
             <li>
               <NavLink
-                to="/dashboard/all-requests"
+                to="/dashboard/all-donation-request"
                 className={linkClass}
               >
                 <FaHeartbeat className="text-accent"/>
