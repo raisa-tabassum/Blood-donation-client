@@ -1,12 +1,13 @@
 import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const Profile = () => {
+  const { user } = useAuth();
   const [editMode, setEditMode] = useState(false);
 
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-2xl shadow-md p-6 md:p-8">
-
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h2 className="heading-font text-2xl md:text-3xl font-bold text-accent">
@@ -23,25 +24,25 @@ const Profile = () => {
         {/* Avatar */}
         <div className="flex flex-col items-center mb-8">
           <img
-            src="https://i.pravatar.cc/200"
-            alt="Profile"
+            src={user?.photoURL}
+            alt={user?.displayName}
             className="w-32 h-32 rounded-full border-4 border-primary object-cover"
           />
+
           <h3 className="mt-4 text-xl font-bold text-accent">
-            Raisa Tabassum
+            {user?.displayName}
           </h3>
         </div>
 
         {/* Form */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
           <div>
             <label className="label">
               <span className="font-medium">Name</span>
             </label>
             <input
               type="text"
-              defaultValue="Raisa Tabassum"
+              defaultValue={user?.displayName}
               disabled={!editMode}
               className="input input-bordered w-full"
             />
@@ -53,7 +54,7 @@ const Profile = () => {
             </label>
             <input
               type="email"
-              defaultValue="raisa@gmail.com"
+              defaultValue={user?.email}
               disabled
               className="input input-bordered w-full bg-base-200"
             />
@@ -65,17 +66,18 @@ const Profile = () => {
             </label>
 
             <select
+              defaultValue={user?.bloodGroup}
               disabled={!editMode}
               className="select select-bordered w-full"
             >
-              <option>A+</option>
-              <option>A-</option>
-              <option>B+</option>
-              <option>B-</option>
-              <option>AB+</option>
-              <option>AB-</option>
-              <option>O+</option>
-              <option>O-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
             </select>
           </div>
 
@@ -102,7 +104,6 @@ const Profile = () => {
               className="input input-bordered w-full"
             />
           </div>
-
         </div>
       </div>
     </div>

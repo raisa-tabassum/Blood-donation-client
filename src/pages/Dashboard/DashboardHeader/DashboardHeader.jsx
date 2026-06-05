@@ -2,8 +2,10 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import Logo from "../../../components/shared/Logo/Logo";
+import useAuth from "../../../hooks/useAuth";
 
 const DashboardHeader = () => {
+  const { user } = useAuth();
   const [dark, setDark] = useState(false);
   const handleTheme = () => {
     const html = document.documentElement;
@@ -34,20 +36,23 @@ const DashboardHeader = () => {
 
       {/* Right Side */}
       <div className="flex items-center gap-4">
-        {/* DaisyUI Theme Toggle */}
+        {/*  Theme Toggle */}
         <button onClick={handleTheme} className="btn btn-ghost btn-circle">
           {dark ? <FaSun /> : <FaMoon />}
         </button>
 
         <div className="hidden md:block text-right">
-          <h4 className="font-semibold text-sm">Raisa Tabassum</h4>
-          <p className="text-xs text-gray-500">Donor</p>
+          <h4 className="font-semibold text-accent text-sm">
+            {user?.displayName || "User"}
+          </h4>
+
+          <p className="text-xs text-gray-400">Donor</p>
         </div>
 
         <img
-          src="https://i.pravatar.cc/150?img=12"
-          alt="user"
-          className="w-10 h-10 rounded-full border-2 border-primary"
+          src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"}
+          alt={user?.displayName}
+          className="w-10 h-10 rounded-full border-2 border-primary object-cover"
         />
       </div>
     </div>
