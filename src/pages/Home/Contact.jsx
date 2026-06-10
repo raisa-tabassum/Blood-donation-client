@@ -20,7 +20,7 @@ const Contact = () => {
 
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Contact Info */}
-          <div className="space-y-8">
+          <div className="space-y-7">
             <div className="flex items-start gap-4">
               <FaPhoneAlt className="text-red-500 text-xl mt-1" />
               <div>

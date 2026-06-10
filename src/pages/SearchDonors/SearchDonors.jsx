@@ -19,7 +19,7 @@ const SearchDonors = () => {
       </div>
 
       {/* Search Form */}
-      <div className="bg-white shadow-lg rounded-2xl p-6 md:p-8">
+      <div className="bg-white shadow-md rounded-2xl p-6 md:p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Blood Group */}
           <select className="select select-bordered rounded-2xl w-full">
@@ -70,28 +70,28 @@ const SearchDonors = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Card */}
           <Card>
-              <img
-                src="https://i.pravatar.cc/150?img=12"
-                alt="donor"
-                className="w-20 h-20 rounded-full mx-auto"
-              />
+            <img
+              src="https://i.pravatar.cc/150?img=12"
+              alt="donor"
+              className="w-20 h-20 rounded-full mx-auto"
+            />
 
-              <h4 className="text-xl font-bold text-center mt-4">John Doe</h4>
+            <h4 className="text-xl font-bold text-center mt-4">John Doe</h4>
 
-              <div className="mt-4 space-y-2 text-neutral">
-                <div className="flex items-center gap-2">
-                  <FaDroplet className="text-primary" />
-                  <span>Blood Group: A+</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaMapMarkerAlt className="text-primary" />
-                  <span>Dhaka, Dhamrai</span>
-                </div>
+            <div className="mt-4 space-y-3 text-neutral">
+              <div className="flex items-center gap-2">
+                <FaDroplet className="text-primary" />
+                <span>Blood Group: A+</span>
               </div>
+              <div className="flex items-center gap-2">
+                <FaMapMarkerAlt className="text-primary" />
+                <span>Dhaka, Dhamrai</span>
+              </div>
+            </div>
 
-              <button className="custom-btn-primary mt-5 w-full">
-                View Profile
-              </button>
+            <button className="custom-btn-primary mt-5 w-full">
+              View Profile
+            </button>
           </Card>
         </div>
       </div>

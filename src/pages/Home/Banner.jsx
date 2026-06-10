@@ -27,7 +27,7 @@ const Banner = () => {
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <NavLink to="/register">
-                <button className="custom-btn-primary w-44 h-12">
+                <button className="custom-btn-primary w-40 md:w-44 h-12">
                   <span>Join As Donor</span>
                 </button>
               </NavLink>

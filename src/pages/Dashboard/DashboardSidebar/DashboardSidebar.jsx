@@ -13,7 +13,7 @@ const DashboardSidebar = () => {
      ${isActive ? "text-primary" : "text-neutral hover:text-primary"}`;
 
   return (
-    <aside className="min-h-full bg-blue-50 w-64 border-r border-base-300">
+    <aside className="min-h-full bg-blue-50 w-44 md:w-64 border-r border-base-300">
       <ul className="menu p-4 space-y-2">
         {/* Common */}
         <li>
