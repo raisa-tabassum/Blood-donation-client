@@ -1,6 +1,7 @@
 import React from "react";
 import { FaPhoneAlt, FaEnvelopeOpenText } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { inputClass, textareaClass } from "../../styles/formStyles";
 
 const Contact = () => {
   return (
@@ -17,7 +18,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-14 items-center">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Contact Info */}
           <div className="space-y-8">
             <div className="flex items-start gap-4">
@@ -26,7 +27,7 @@ const Contact = () => {
                 <h4 className="text-lg font-semibold text-gray-800">
                   Phone Number
                 </h4>
-                <p className="text-gray-600">+88 961 876 54321</p>
+                <p className="text-neutral">+88 961 876 54321</p>
               </div>
             </div>
 
@@ -36,7 +37,7 @@ const Contact = () => {
                 <h4 className="text-lg font-semibold text-gray-800">
                   Email Address
                 </h4>
-                <p className="text-gray-600">bloodconnect@support.com</p>
+                <p className="text-neutral">bloodconnect@support.com</p>
               </div>
             </div>
 
@@ -46,7 +47,7 @@ const Contact = () => {
                 <h4 className="text-lg font-semibold text-gray-800">
                   Location
                 </h4>
-                <p className="text-gray-600">
+                <p className="text-neutral">
                   Available nationwide for emergency blood service
                 </p>
               </div>
@@ -59,19 +60,19 @@ const Contact = () => {
               <input
                 type="text"
                 placeholder="Your Name"
-                className="input input-bordered border-gray-200 w-full input-sm"
+              className={inputClass}
               />
 
               <input
                 type="email"
                 placeholder="Your Email"
-                className="input input-bordered border-gray-200 w-full"
+              className={inputClass}
               />
 
               <textarea
                 placeholder="Your Message"
                 rows="5"
-                className="textarea textarea-bordered border-gray-200 w-full"
+                className={textareaClass}
               ></textarea>
 
               <button className="custom-btn w-full">

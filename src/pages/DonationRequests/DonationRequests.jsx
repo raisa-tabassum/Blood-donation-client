@@ -2,6 +2,7 @@ import React from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarDays, FaClock, FaDroplet } from "react-icons/fa6";
 import { NavLink } from "react-router";
+import Card from "../../components/shared/Card/Card";
 
 const DonationRequests = () => {
   const requests = [
@@ -39,7 +40,7 @@ const DonationRequests = () => {
           Blood Donation Requests
         </h2>
 
-        <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+        <p className="mt-4 text-neutral max-w-2xl mx-auto">
           Browse active blood donation requests and help save lives by
           connecting with recipients in need.
         </p>
@@ -86,18 +87,15 @@ const DonationRequests = () => {
         </table>
       </div>
 
-      {/* Cards style */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:hidden">
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
         {requests.map((request) => (
-          <div
-            key={request.id}
-            className="bg-white rounded-2xl shadow-md p-6"
-          >
+          <Card key={request.id} className="bg-white rounded-2xl shadow-md p-6">
             <h3 className="heading-font text-xl font-semibold text-accent">
               {request.recipient}
             </h3>
 
-            <div className="space-y-3 mt-4 text-gray-600">
+            <div className="space-y-3 mt-4 text-neutral">
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt className="text-primary" />
                 <span>{request.location}</span>
@@ -127,7 +125,7 @@ const DonationRequests = () => {
                 View Details
               </NavLink>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </section>

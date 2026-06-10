@@ -19,7 +19,7 @@ const Banner = () => {
               <span className="text-red-600"> Blood Donation</span>
             </h1>
 
-            <p className="mt-6 text-gray-600 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
+            <p className="mt-6 text-neutral text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
               BloodConnect brings donors and recipients together on one
               platform, helping people connect faster and save lives when every
               minute matters.

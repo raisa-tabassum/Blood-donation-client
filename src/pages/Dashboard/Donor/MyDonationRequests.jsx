@@ -1,19 +1,22 @@
 import { useState } from "react";
+import { FaFilter } from "react-icons/fa";
+import Table from "../../../components/ui/Table/Table";
+import TableHeader from "../../../components/ui/Table/TableHeader";
 
 const MyDonationRequests = () => {
   const getStatusClass = (status) => {
     switch (status) {
       case "pending":
-        return "badge badge-warning";
+        return "badge badge-warning text-white";
 
       case "inprogress":
-        return "badge badge-info";
+        return "badge badge-info text-white";
 
       case "done":
-        return "badge badge-success";
+        return "badge badge-success text-white";
 
       case "canceled":
-        return "badge badge-error";
+        return "badge badge-error text-white";
 
       default:
         return "badge";
@@ -48,61 +51,58 @@ const MyDonationRequests = () => {
           My Donation Requests
         </h2>
 
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="select select-bordered w-full md:w-56 rounded-xl"
-        >
-          <option value="">All Status</option>
-          <option value="pending">Pending</option>
-          <option value="inprogress">In Progress</option>
-          <option value="done">Done</option>
-          <option value="canceled">Canceled</option>
-        </select>
-      </div>
-      <div className="bg-white rounded-2xl shadow-md p-6">
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr className="text-primary">
-                <th>Recipient</th>
-                <th>Location</th>
-                <th>Blood Group</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+        <div className="flex items-center gap-2">
+          <FaFilter className="text-primary" />
 
-            <tbody>
-              {requests.map((request) => (
-                <tr key={request.id}>
-                  <td>{request.recipient}</td>
-
-                  <td>{request.location}</td>
-
-                  <td>{request.bloodGroup}</td>
-
-                  <td>{request.date}</td>
-
-                  <td>
-                    <span className={getStatusClass(request.status)}>
-                      {request.status}
-                    </span>
-                  </td>
-
-                  <td>
-                    <button className="btn btn-sm btn-outline btn-primary">
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="select select-bordered rounded-xl"
+          >
+            <option>All Status</option>
+            <option>Pending</option>
+            <option>Inprogress</option>
+            <option>Done</option>
+            <option>Canceled</option>
+          </select>
         </div>
       </div>
+      {/* Table */}
+      <Table className="shadow-md overflow-x-auto">
+        <TableHeader
+          columns={[
+            "Recipient",
+            "Location",
+            "Blood Group",
+            "Date",
+            "Status",
+            "Action",
+          ]}
+        />
+
+        <tbody>
+          {requests.map((request) => (
+            <tr key={request.id}>
+              <td>{request.recipient}</td>
+              <td>{request.location}</td>
+              <td>
+                <span className="badge badge-error text-white">
+                  {request.bloodGroup}
+                </span>
+              </td>
+              <td>{request.date}</td>
+              <td>
+                <span className={getStatusClass(request.status)}>
+                  {request.status}
+                </span>
+              </td>
+              <td>
+                <button className="btn btn-sm custom-btn-outline">View</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

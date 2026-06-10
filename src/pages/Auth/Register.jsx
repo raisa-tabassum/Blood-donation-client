@@ -2,9 +2,11 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { inputClass, selectClass } from "../../styles/formStyles";
+import Card from "../../components/shared/Card/Card";
 
 const Register = () => {
   const {
@@ -16,7 +18,7 @@ const Register = () => {
 
   const { registerUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
-  // const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const handleRegistration = async (data) => {
     try {
@@ -42,23 +44,19 @@ const Register = () => {
       });
 
       // 4. Save User to Database
-      // const userInfo = {
-      //   name: data.name,
-      //   email: data.email,
-      //   avatar: photoURL,
-      //   bloodGroup: data.bloodGroup,
-      //   district: data.district,
-      //   upazila: data.upazila,
-      //   role: "donor",
-      //   status: "active",
-      //   createdAt: new Date(),
-      // };
-
-      // await axiosSecure.post("/users", userInfo);
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        avatar: photoURL,
+        bloodGroup: data.bloodGroup,
+        district: data.district,
+        upazila: data.upazila,
+      };
+      await axiosSecure.post("/users", userInfo);
 
       console.log("User Created:", result.user);
-
       toast.success("Registration successful!");
+
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
@@ -68,8 +66,8 @@ const Register = () => {
   return (
     <div>
       <div className="min-h-screen bg-[#FFF5F5] flex items-center justify-center py-12 px-4">
-        <div className="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-8">
-          <h2 className="text-3xl md:text-4xl text-center font-bold text-primary mb-8">
+        <Card className="w-full max-w-2xl p-8">
+          <h2 className="heading-font text-3xl md:text-4xl text-center font-bold text-primary mb-8">
             Registration
           </h2>
 
@@ -85,7 +83,7 @@ const Register = () => {
               {...register("name", {
                 required: "Name is required",
               })}
-              className="input input-bordered rounded-2xl w-full"
+              className={inputClass}
             />
             {errors.name && (
               <p className="text-primary text-sm">{errors.name.message}</p>
@@ -97,7 +95,7 @@ const Register = () => {
               {...register("avatar", {
                 required: "Avatar is required",
               })}
-              className="file-input file-input-bordered rounded-2xl w-full"
+              className="file-input file-input-bordered rounded-xl w-full"
             />
             {errors.avatar && (
               <p className="text-red-500 text-sm">{errors.avatar.message}</p>
@@ -107,7 +105,7 @@ const Register = () => {
               {...register("bloodGroup", {
                 required: "Blood Group is required",
               })}
-              className="select select-bordered rounded-2xl w-full"
+              className={selectClass}
             >
               <option value="">Select Blood Group</option>
               <option>A+</option>
@@ -148,7 +146,7 @@ const Register = () => {
               {...register("email", {
                 required: "Email is required",
               })}
-              className="input input-bordered rounded-2xl w-full"
+              className={inputClass}
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -169,7 +167,7 @@ const Register = () => {
                     "Must contain uppercase, lowercase, number and special character",
                 },
               })}
-              className="input input-bordered rounded-2xl w-full"
+              className={inputClass}
             />
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -183,7 +181,7 @@ const Register = () => {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="input input-bordered rounded-2xl w-full"
+              className={inputClass}
             />
             {errors.confirmPassword && (
               <p className="text-red-500 text-sm">
@@ -195,7 +193,7 @@ const Register = () => {
             </button>
           </form>
 
-          <p className="text-center mt-5 text-gray-600">
+          <p className="text-center mt-5 text-neutral">
             Already have an account?{" "}
             <NavLink
               to="/login"
@@ -204,7 +202,7 @@ const Register = () => {
               Login
             </NavLink>
           </p>
-        </div>
+        </Card>
       </div>
     </div>
   );

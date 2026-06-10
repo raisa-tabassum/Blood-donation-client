@@ -31,10 +31,6 @@ export const router = createBrowserRouter([
         path: "donation-requests",
         Component: DonationRequests,
       },
-      {
-        path: "donation-requests",
-        Component: DonationRequests,
-      },
     ],
   },
   {

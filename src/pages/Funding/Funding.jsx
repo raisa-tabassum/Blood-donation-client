@@ -1,5 +1,7 @@
 import React from "react";
 import { BiDonateHeart } from "react-icons/bi";
+import Table from "../../components/ui/Table/Table";
+import TableHeader from "../../components/ui/Table/TableHeader";
 
 const Funding = () => {
   const funds = [
@@ -42,35 +44,21 @@ const Funding = () => {
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md p-6">
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr className="text-accent">
-                <th>No.</th>
-                <th>Donor Name</th>
-                <th>Amount</th>
-                <th>Funding Date</th>
+      {/* Table */}
+      <div className="overflow-x-auto shadow-md">
+        <Table>
+          <TableHeader columns={["No", "Name", "Amount", "Date"]} />
+          <tbody>
+            {funds.map((f, i) => (
+              <tr key={f.id}>
+                <td>{i + 1}</td>
+                <td>{f.name}</td>
+                <td className="text-primary font-semibold">৳ {f.amount}</td>
+                <td>{f.date}</td>
               </tr>
-            </thead>
-
-            <tbody>
-              {funds.map((fund, index) => (
-                <tr key={fund.id}>
-                  <td>{index + 1}</td>
-                  <td>{fund.name}</td>
-                  <td>
-                    <span className="font-semibold text-primary">
-                      ৳ {fund.amount}
-                    </span>
-                  </td>
-                  <td>{fund.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </div>
   );

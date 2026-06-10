@@ -1,9 +1,22 @@
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { inputClass, selectClass } from "../../../styles/formStyles";
 
 const Profile = () => {
   const { user } = useAuth();
   const [editMode, setEditMode] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
+  const { data: dbUser = {} } = useQuery({
+    queryKey: ["user", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data;
+    },
+  });
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -24,51 +37,49 @@ const Profile = () => {
         {/* Avatar */}
         <div className="flex flex-col items-center mb-8">
           <img
-            src={user?.photoURL}
-            alt={user?.displayName}
+            src={dbUser?.avatar}
+            alt={dbUser?.name}
             className="w-32 h-32 rounded-full border-4 border-primary object-cover"
           />
 
-          <h3 className="mt-4 text-xl font-bold text-accent">
-            {user?.displayName}
-          </h3>
+          <h3 className="mt-4 text-xl font-bold text-accent">{dbUser?.name}</h3>
         </div>
 
         {/* Form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <label className="label">
+            <label className="label text-accent">
               <span className="font-medium">Name</span>
             </label>
             <input
               type="text"
-              defaultValue={user?.displayName}
+              defaultValue={dbUser?.name}
               disabled={!editMode}
-              className="input input-bordered w-full"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="label">
+            <label className="label text-accent">
               <span className="font-medium">Email</span>
             </label>
             <input
               type="email"
-              defaultValue={user?.email}
+              defaultValue={dbUser?.email}
               disabled
-              className="input input-bordered w-full bg-base-200"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="label">
+            <label className="label text-accent">
               <span className="font-medium">Blood Group</span>
             </label>
 
             <select
-              defaultValue={user?.bloodGroup}
+              defaultValue={dbUser?.bloodGroup}
               disabled={!editMode}
-              className="select select-bordered w-full"
+              className={selectClass}
             >
               <option value="A+">A+</option>
               <option value="A-">A-</option>
@@ -82,26 +93,26 @@ const Profile = () => {
           </div>
 
           <div>
-            <label className="label">
+            <label className="label text-accent">
               <span className="font-medium">District</span>
             </label>
             <input
               type="text"
               defaultValue="Dhaka"
               disabled={!editMode}
-              className="input input-bordered w-full"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label className="label">
+            <label className="label text-accent">
               <span className="font-medium">Upazila</span>
             </label>
             <input
               type="text"
               defaultValue="Munshiganj"
               disabled={!editMode}
-              className="input input-bordered w-full"
+              className={inputClass}
             />
           </div>
         </div>

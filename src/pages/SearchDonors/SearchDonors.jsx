@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { FaDroplet } from "react-icons/fa6";
+import Card from "../../components/shared/Card/Card";
 
 const SearchDonors = () => {
-    return (
-
+  return (
     <div className="max-w-7xl mx-auto px-4 py-16">
       {/* Heading */}
       <div className="text-center mb-10">
@@ -10,7 +12,7 @@ const SearchDonors = () => {
           Find Blood Donors
         </h2>
 
-        <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+        <p className="mt-4 text-neutral max-w-2xl mx-auto">
           Search verified blood donors by blood group, district, and upazila to
           quickly find the help you need.
         </p>
@@ -19,7 +21,6 @@ const SearchDonors = () => {
       {/* Search Form */}
       <div className="bg-white shadow-lg rounded-2xl p-6 md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-
           {/* Blood Group */}
           <select className="select select-bordered rounded-2xl w-full">
             <option disabled selected>
@@ -56,9 +57,7 @@ const SearchDonors = () => {
           </select>
 
           {/* Search Button */}
-          <button className="custom-btn-primary">
-            Search
-          </button>
+          <button className="custom-btn-primary">Search</button>
         </div>
       </div>
 
@@ -68,30 +67,32 @@ const SearchDonors = () => {
           Search Results
         </h3>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Card */}
-          <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition">
-            <img
-              src="https://i.pravatar.cc/150?img=12"
-              alt="donor"
-              className="w-20 h-20 rounded-full mx-auto"
-            />
+          <Card>
+              <img
+                src="https://i.pravatar.cc/150?img=12"
+                alt="donor"
+                className="w-20 h-20 rounded-full mx-auto"
+              />
 
-            <h4 className="text-xl font-bold text-center mt-4">
-              John Doe
-            </h4>
+              <h4 className="text-xl font-bold text-center mt-4">John Doe</h4>
 
-            <div className="mt-4 space-y-2 text-gray-600">
-              <p>🩸 Blood Group: A+</p>
-              <p>📍 Dhaka, Dhamrai</p>
-            </div>
+              <div className="mt-4 space-y-2 text-neutral">
+                <div className="flex items-center gap-2">
+                  <FaDroplet className="text-primary" />
+                  <span>Blood Group: A+</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaMapMarkerAlt className="text-primary" />
+                  <span>Dhaka, Dhamrai</span>
+                </div>
+              </div>
 
-            <button className="custom-btn-primary mt-5 w-full">
-              View Profile
-            </button>
-          </div>
-
+              <button className="custom-btn-primary mt-5 w-full">
+                View Profile
+              </button>
+          </Card>
         </div>
       </div>
     </div>

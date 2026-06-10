@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { inputClass } from "../../styles/formStyles";
+import Card from "../../components/shared/Card/Card";
 
 const Login = () => {
   const { loginUser } = useAuth();
@@ -26,39 +28,31 @@ const Login = () => {
     } catch (error) {
       console.log(error);
 
-      toast.error(
-        error.message || "Invalid email or password"
-      );
+      toast.error(error.message || "Invalid email or password");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl rounded-3xl">
-        <div className="card-body p-8">
-
-          <h2 className="text-3xl font-bold text-center text-primary">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFF5F5] px-4">
+      <Card className="w-full max-w-md">
+        <div className="card-body p-2">
+          <h2 className="heading-font text-3xl font-bold text-center text-primary">
             Login
           </h2>
 
-          <p className="text-center text-gray-500 mt-2">
+          <p className="text-center text-neutral mt-2">
             Welcome back to BloodConnect
           </p>
 
-          <form
-            onSubmit={handleSubmit(handleLogin)}
-            className="mt-8 space-y-5"
-          >
+          <form onSubmit={handleSubmit(handleLogin)} className="mt-8 space-y-5">
             {/* Email */}
             <div>
-              <label className="text-sm text-gray-600">
-                Email
-              </label>
+              <label className="text-sm text-neutral">Email</label>
 
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="input input-bordered rounded-xl w-full mt-1"
+                className={inputClass}
                 {...register("email", {
                   required: "Email is required",
                 })}
@@ -73,14 +67,12 @@ const Login = () => {
 
             {/* Password */}
             <div>
-              <label className="text-sm text-gray-600">
-                Password
-              </label>
+              <label className="text-sm text-neutral">Password</label>
 
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="input input-bordered rounded-xl w-full mt-1"
+                className={inputClass}
                 {...register("password", {
                   required: "Password is required",
                 })}
@@ -98,7 +90,7 @@ const Login = () => {
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-neutral mt-6">
             Don’t have an account?{" "}
             <Link
               to="/register"
@@ -107,9 +99,8 @@ const Login = () => {
               Register
             </Link>
           </p>
-
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

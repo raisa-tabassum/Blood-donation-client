@@ -30,8 +30,8 @@ const Footer = () => {
           <a className="link link-hover">45 Anywhere St, Wari, Uk</a>
         </nav>
       </footer>
-      <footer className="footer sm:footer-horizontal bg-base-200 text-base-content border-base-300 border-t px-10 py-4 items-center">
-        <p>Copyright © {new Date().getFullYear()} - All right reserved.</p>
+      <footer className="footer sm:footer-horizontal bg-base-200 text-base-content border-base-300 border-t px-10 py-3 items-center">
+        <p className="text-neutral">Copyright © {new Date().getFullYear()} - All right reserved.</p>
         <nav className="md:place-self-center md:justify-self-end">
           <div className="footer-title">
             <p>Social Logins</p>

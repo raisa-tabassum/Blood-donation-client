@@ -1,11 +1,25 @@
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 import { useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import Logo from "../../../components/shared/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { HiSun } from "react-icons/hi2";
 
 const DashboardHeader = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: dbUser = {} } = useQuery({
+    queryKey: ["user", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data;
+    },
+  });
+
   const [dark, setDark] = useState(false);
   const handleTheme = () => {
     const html = document.documentElement;
@@ -36,22 +50,22 @@ const DashboardHeader = () => {
 
       {/* Right Side */}
       <div className="flex items-center gap-4">
-        {/*  Theme Toggle */}
+        {/* Theme Toggle */}
         <button onClick={handleTheme} className="btn btn-ghost btn-circle">
-          {dark ? <FaSun /> : <FaMoon />}
+          {dark ? <HiSun /> : <FaMoon />}
         </button>
 
         <div className="hidden md:block text-right">
           <h4 className="font-semibold text-accent text-sm">
-            {user?.displayName || "User"}
+            {dbUser?.name || "User"}
           </h4>
 
           <p className="text-xs text-gray-400">Donor</p>
         </div>
 
         <img
-          src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"}
-          alt={user?.displayName}
+          src={dbUser?.avatar || "https://i.ibb.co/4pDNDk1/avatar.png"}
+          alt={dbUser?.name}
           className="w-10 h-10 rounded-full border-2 border-primary object-cover"
         />
       </div>
