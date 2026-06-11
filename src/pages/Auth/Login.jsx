@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
@@ -16,7 +16,10 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const [loading, setLoading] = useState(false);
+
   const handleLogin = async (data) => {
+    setLoading(true);
     try {
       const result = await loginUser(data.email, data.password);
 
@@ -29,6 +32,8 @@ const Login = () => {
       console.log(error);
 
       toast.error(error.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,8 +90,15 @@ const Login = () => {
               )}
             </div>
 
-            <button className="custom-btn w-full">
-              <span>Login</span>
+            <button
+              type="submit"
+              disabled={loading}
+              className="custom-btn-primary w-full flex justify-center items-center gap-2 disabled:opacity-70"
+            >
+              {loading && (
+                <span className="loading loading-spinner loading-sm"></span>
+              )}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 
