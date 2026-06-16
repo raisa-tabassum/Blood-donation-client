@@ -3,6 +3,8 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarDays, FaClock, FaDroplet } from "react-icons/fa6";
 import { NavLink } from "react-router";
 import Card from "../../components/shared/Card/Card";
+import Table from "../../components/ui/Table/Table";
+import TableHeader from "../../components/ui/Table/TableHeader";
 
 const DonationRequests = () => {
   const requests = [
@@ -33,7 +35,7 @@ const DonationRequests = () => {
   ];
 
   return (
-    <section className="min-h-screen bg-[#FFF5F5] px-4 py-16">
+    <section className="min-h-screen bg-[#FFF8EE] px-4 py-16">
       {/* Heading */}
       <div className="text-center mb-12">
         <h2 className="heading-font text-3xl md:text-5xl font-bold text-accent">
@@ -48,17 +50,17 @@ const DonationRequests = () => {
 
       {/* Desktop Table */}
       <div className="hidden lg:block max-w-6xl mx-auto overflow-x-auto bg-white rounded-2xl shadow-md">
-        <table className="table">
-          <thead>
-            <tr className="bg-blue-50 text-accent">
-              <th>Recipient</th>
-              <th>Location</th>
-              <th>Blood Group</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        <Table className="overflow-x-auto shadow-md">
+          <TableHeader
+            columns={[
+              "Recipient",
+              "Location",
+              "Blood Group",
+              "Date",
+              "Time",
+              "Actions",
+            ]}
+          />
 
           <tbody>
             {requests.map((request) => (
@@ -84,7 +86,7 @@ const DonationRequests = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
       {/* Cards */}

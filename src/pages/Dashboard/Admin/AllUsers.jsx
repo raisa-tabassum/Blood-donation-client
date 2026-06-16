@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaUserShield,
   FaUserCheck,
@@ -9,34 +9,65 @@ import {
 import { HiDotsVertical } from "react-icons/hi";
 import Table from "../../../components/ui/Table/Table";
 import TableHeader from "../../../components/ui/Table/TableHeader";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const users = [
-    {
-      id: 1,
-      name: "Raisa Tabassum",
-      email: "raisa@gmail.com",
-      role: "Donor",
-      status: "Active",
-      avatar: "https://i.pravatar.cc/150?img=1",
+  const axiosSecure = useAxiosSecure();
+  const [status, setStatus] = useState("");
+
+  const { data: users = [], refetch } = useQuery({
+    queryKey: ["users", status],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/users${status ? `?status=${status}` : ""}`,
+      );
+      return res.data;
     },
-    {
-      id: 2,
-      name: "John Doe",
-      email: "john@gmail.com",
-      role: "Volunteer",
-      status: "Blocked",
-      avatar: "https://i.pravatar.cc/150?img=2",
-    },
-    {
-      id: 3,
-      name: "Sarah Khan",
-      email: "sarah@gmail.com",
-      role: "Admin",
-      status: "Active",
-      avatar: "https://i.pravatar.cc/150?img=3",
-    },
-  ];
+  });
+
+  const handleRoleUpdate = async (user, role) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: `Make ${user.name} ${role}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    });
+
+    if (!result.isConfirmed) return;
+
+    const res = await axiosSecure.patch(`/users/${user._id}/role`, { role });
+
+    if (res.data.modifiedCount) {
+      refetch();
+
+      Swal.fire({
+        icon: "success",
+        title: `${user.name} is now ${role}`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  };
+
+  const handleStatusUpdate = async (user, status) => {
+    const res = await axiosSecure.patch(`/users/${user._id}/status`, {
+      status,
+    });
+
+    if (res.data.modifiedCount) {
+      refetch();
+
+      Swal.fire({
+        icon: "success",
+        title: `User ${status} successfully`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -48,10 +79,14 @@ const AllUsers = () => {
 
         <div className="flex items-center gap-2">
           <FaFilter className="text-primary" />
-          <select className="select select-bordered rounded-xl">
-            <option>All Users</option>
-            <option>Active</option>
-            <option>Blocked</option>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="select select-bordered rounded-xl"
+          >
+            <option value="">All Users</option>
+            <option value="active">Active</option>
+            <option value="blocked">Blocked</option>
           </select>
         </div>
       </div>
@@ -63,7 +98,7 @@ const AllUsers = () => {
         />
         <tbody>
           {users.map((user) => (
-            <tr key={user.id}>
+            <tr key={user._id}>
               <td>
                 <img src={user.avatar} className="w-10 h-10 rounded-full" />
               </td>
@@ -74,9 +109,9 @@ const AllUsers = () => {
               <td>
                 <span
                   className={`badge text-white font-semibold ${
-                    user.role === "Admin"
+                    user.role === "admin"
                       ? "badge-error"
-                      : user.role === "Volunteer"
+                      : user.role === "volunteer"
                         ? "badge-info"
                         : "badge-primary"
                   }`}
@@ -88,7 +123,7 @@ const AllUsers = () => {
               <td>
                 <span
                   className={`badge text-white ${
-                    user.status === "Active" ? "badge-success" : "badge-error"
+                    user.status === "active" ? "badge-success" : "badge-error"
                   }`}
                 >
                   {user.status}
@@ -105,37 +140,49 @@ const AllUsers = () => {
                     tabIndex={0}
                     className="dropdown-content z-1 menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
-                    {/* Block User */}
-                    <li>
-                      <button>
-                        <FaUserSlash className="text-red-500" />
-                        Block User
-                      </button>
-                    </li>
+                    {user.status === "active" ? (
+                      <li>
+                        {/* Block User */}
+                        <button
+                          onClick={() => handleStatusUpdate(user, "blocked")}
+                        >
+                          <FaUserSlash className="text-red-500" />
+                          Block User
+                        </button>
+                      </li>
+                    ) : (
+                      <li>
+                        {/* Unblock User */}
+                        <button
+                          onClick={() => handleStatusUpdate(user, "active")}
+                        >
+                          <FaUserCheck className="text-green-500" />
+                          Unblock User
+                        </button>
+                      </li>
+                    )}
 
-                    {/* Unblock User */}
-                    <li>
-                      <button>
-                        <FaUserCheck className="text-green-500" />
-                        Unblock User
-                      </button>
-                    </li>
+                    {user.role !== "volunteer" && (
+                      <li>
+                        {/* Make Volunteer */}
+                        <button
+                          onClick={() => handleRoleUpdate(user, "volunteer")}
+                        >
+                          <FaHandsHelping className="text-blue-500" />
+                          Make Volunteer
+                        </button>
+                      </li>
+                    )}
 
-                    {/* Make Volunteer */}
-                    <li>
-                      <button>
-                        <FaHandsHelping className="text-blue-500" />
-                        Make Volunteer
-                      </button>
-                    </li>
-
-                    {/* Make Admin */}
-                    <li>
-                      <button>
-                        <FaUserShield className="text-purple-500" />
-                        Make Admin
-                      </button>
-                    </li>
+                    {user.role !== "admin" && (
+                      <li>
+                        {/* Make Admin */}
+                        <button onClick={() => handleRoleUpdate(user, "admin")}>
+                          <FaUserShield className="text-purple-500" />
+                          Make Admin
+                        </button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </td>

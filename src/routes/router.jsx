@@ -13,6 +13,8 @@ import Funding from "../pages/Funding/Funding";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllBloodDonationRequest from "../pages/Dashboard/Admin/AllBloodDonationRequest";
 import AuthLayout from "../layouts/AuthLayout";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +51,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    Component: DashboardLayout,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "profile",
@@ -69,7 +75,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-users",
-        Component: AllUsers,
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "all-donation-request",

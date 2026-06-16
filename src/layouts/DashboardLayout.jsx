@@ -4,8 +4,8 @@ import DashboardHeader from "../pages/Dashboard/DashboardHeader/DashboardHeader"
 
 const DashboardLayout = () => {
   return (
-    <div className="drawer lg:drawer-open bg-[#FFF5F5]">
-      <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
+    <div className="drawer lg:drawer-open bg-[#FCF9EA]">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* Main Content */}
       <div className="drawer-content flex flex-col">
@@ -16,8 +16,8 @@ const DashboardLayout = () => {
       </div>
 
       {/* Sidebar */}
-      <div className="drawer-side">
-        <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
+      <div className="drawer-side overflow-visible">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
         <DashboardSidebar />
       </div>
     </div>

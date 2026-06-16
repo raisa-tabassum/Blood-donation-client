@@ -5,8 +5,10 @@ import useAuth from "../../../hooks/useAuth";
 import { TbLogout2 } from "react-icons/tb";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaMoon } from "react-icons/fa";
+import { FaMoon, FaUser } from "react-icons/fa";
 import { HiSun } from "react-icons/hi2";
+import { HiMenuAlt2 } from "react-icons/hi";
+import { BiDonateHeart, BiSolidDashboard } from "react-icons/bi";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -37,9 +39,33 @@ const Navbar = () => {
     <li>
       <NavLink
         to="/donation-requests"
-        className="text-accent hover:text-primary text-md lg:text-xl font-semibold pl-6"
+        className={({ isActive }) =>
+          `text-md lg:text-xl font-semibold pl-6 ${
+            isActive ? "text-gray-900" : "text-accent hover:text-primary"
+          }`
+        }
       >
         Donation Requests
+      </NavLink>
+      <NavLink
+        to="/search-donors"
+        className={({ isActive }) =>
+          `text-md lg:text-xl font-semibold pl-6 ${
+            isActive ? "text-gray-900" : "text-accent hover:text-primary"
+          }`
+        }
+      >
+        Search Donors
+      </NavLink>
+      <NavLink
+        to="/dashboard/funding"
+        className={({ isActive }) =>
+          `text-md lg:text-xl font-semibold pl-6 ${
+            isActive ? "text-gray-900" : "text-accent hover:text-primary"
+          }`
+        }
+      >
+        Funding
       </NavLink>
     </li>
   );
@@ -52,29 +78,15 @@ const Navbar = () => {
   };
   return (
     <div>
-      <div className="navbar bg-base-200 shadow-md rounded-lg">
+      <div className="navbar sticky w-full z-50 bg-base-100 rounded-xl">
         <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
+          <div className="dropdown dropdown-hover lg:hidden">
+            <div tabIndex={0} role="button" className="mx-2">
+              <HiMenuAlt2 className="text-accent" />
             </div>
             <ul
               tabIndex="-1"
-              className="dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="dropdown-content menu bg-base-200 rounded-xl z-1 w-46 p-2 shadow-md"
             >
               {links}
             </ul>
@@ -120,17 +132,38 @@ const Navbar = () => {
 
                 <li>
                   <Link
+                    to="/dashboard/profile"
+                    className="rounded-lg text-accent font-semibold hover:bg-primary hover:text-white transition-all duration-200"
+                  >
+                    <FaUser />
+                    Profile
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
                     to="/dashboard"
                     className="rounded-lg text-accent font-semibold hover:bg-primary hover:text-white transition-all duration-200"
                   >
+                    <BiSolidDashboard />
                     Dashboard
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/dashboard/funding"
+                    className="rounded-lg text-accent font-semibold hover:bg-primary hover:text-white transition-all duration-200"
+                  >
+                    <BiDonateHeart />
+                    Funding
                   </Link>
                 </li>
 
                 <li>
                   <button
                     onClick={handleLogOut}
-                    className="rounded-lg text-primary font-medium text-left"
+                    className="rounded-lg text-primary font-medium text-left hover:bg-[#FCF9EA]"
                   >
                     <TbLogout2 />
                     Logout

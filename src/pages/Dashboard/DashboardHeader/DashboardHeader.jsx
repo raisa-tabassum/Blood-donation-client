@@ -34,9 +34,9 @@ const DashboardHeader = () => {
   return (
     <div className="navbar bg-white shadow-sm px-4 md:px-6">
       {/* Mobile Menu */}
-      <div className="flex-none lg:hidden flex items-center">
+      <div className="flex-none flex items-center">
         <label
-          htmlFor="dashboard-drawer"
+          htmlFor="my-drawer-4"
           className="mr-2 flex items-center justify-center"
         >
           <HiOutlineMenuAlt3 className="text-accent text-2xl hover:text-secondary" />

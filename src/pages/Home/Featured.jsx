@@ -25,9 +25,9 @@ const Featured = () => {
     },
   ];
   return (
-    <div className="lg:my-12 max-w-7xl mx-auto">
+    <div className="my-8 lg:my-12 max-w-7xl mx-auto">
       <h2 className="heading-font text-accent text-3xl md:text-5xl font-bold px-2 text-center">
-        Why Choose BloodConnect?
+        Why Choose <span className="text-primary">Blood</span>Connect?
       </h2>
 
       <p className="mt-5 text-center max-w-2xl px-2 mx-auto text-neutral">

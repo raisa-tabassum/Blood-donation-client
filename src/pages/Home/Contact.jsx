@@ -5,7 +5,7 @@ import { inputClass, textareaClass } from "../../styles/formStyles";
 
 const Contact = () => {
   return (
-    <section className="py-15 bg-[#FFF5F5]">
+    <section className="py-15  bg-[#FFFBF5]">
       <div className="max-w-6xl mx-auto px-6">
         {/* Heading */}
         <div className="text-center mb-12">

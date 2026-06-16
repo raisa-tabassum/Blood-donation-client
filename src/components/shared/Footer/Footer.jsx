@@ -19,15 +19,15 @@ const Footer = () => {
         </aside>
         <nav>
           <h6 className="footer-title">Quick Links</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Volunteers</a>
-          <a className="link link-hover">FAQs</a>
+          <Link to="/about" className="link link-hover">About us</Link>
+          <Link to="/volunteers" className="link link-hover">Volunteers</Link>
+          <Link to="/faq" className="link link-hover">FAQs</Link>
         </nav>
         <nav>
           <h6 className="footer-title">Contact Us</h6>
-          <a className="link link-hover">+88 961 876 54321</a>
-          <a className="link link-hover">bloodconnect@support.com</a>
-          <a className="link link-hover">45 Anywhere St, Wari, Uk</a>
+          <p>+88 961 876 54321</p>
+          <p>bloodconnect@support.com</p>
+          <p>45 Anywhere St, Wari, Uk</p>
         </nav>
       </footer>
       <footer className="footer sm:footer-horizontal bg-base-200 text-base-content border-base-300 border-t px-10 py-3 items-center">

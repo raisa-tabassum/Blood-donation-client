@@ -3,18 +3,21 @@ import bannerImg from "../../assets/banner.png";
 
 const Banner = () => {
   return (
-    <section className="relative">
+    <section className="relative overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-no-repeat bg-center md:bg-right bg-contain opacity-[0.38]"
+        className="absolute inset-0 bg-no-repeat bg-center bg-cover opacity-40"
         style={{ backgroundImage: `url(${bannerImg})` }}
-      ></div>
+      />
 
-      {/* text */}
-      <div className="relative max-w-7xl mx-auto px-6 py-24 lg:py-40">
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/5"></div>
+
+      {/* content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8 md:py-24">
         <div className="flex justify-center">
           <div className="max-w-3xl text-center z-10">
-            <h1 className="heading-font font-bold text-gray-800 text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl">
+            <h1 className="heading-font font-bold text-accent text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl">
               Save Lives Through
               <span className="text-red-600"> Blood Donation</span>
             </h1>

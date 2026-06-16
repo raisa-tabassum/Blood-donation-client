@@ -9,7 +9,7 @@ const Logo = () => {
         <div className="flex items-center gap-2">
           {/* <img src={logo} alt="" /> */}
           <MdBloodtype className="text-xl md:text-4xl text-red-700"/>
-          <h3 className="text-xl md:text-3xl font-bold -ms-1.5 text-secondary">BloodConnect</h3>
+          <h3 className="text-xl md:text-3xl font-bold -ms-1.5 text-secondary">Blood<span className="text-accent">Connect</span></h3>
         </div>
       </Link>
     </div>

@@ -9,37 +9,53 @@ const DashboardSidebar = () => {
   // const { role } = useRole();
 
   const linkClass = ({ isActive }) =>
-    `flex items-center font-semibold gap-3 px-4 py-2 hover:bg-transparent rounded-lg transition-all
+    `flex items-center font-semibold gap-3 px-4 py-3 rounded-lg transition-all is-drawer-close:tooltip is-drawer-close:tooltip-right
      ${isActive ? "text-primary" : "text-neutral hover:text-primary"}`;
 
   return (
-    <aside className="min-h-full bg-blue-50 w-44 md:w-64 border-r border-base-300">
-      <ul className="menu p-4 space-y-2">
-        {/* Common */}
+    <aside
+      className="flex min-h-full flex-col
+    bg-blue-50
+    is-drawer-close:w-20
+    is-drawer-open:w-64 border-r border-blue-50"
+    >
+      <ul className=" p-4 space-y-2">
         <li>
-          <NavLink to="/dashboard" end className={linkClass}>
-            <FaHome className="text-accent" />
-            Home
+          <NavLink
+            to="/dashboard"
+            end
+            className={linkClass}
+            data-tip="Homepage"
+          >
+            <FaHome className="text-accent text-lg shrink-0" />
+
+            <span className="is-drawer-close:hidden">Homepage</span>
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/dashboard/profile" className={linkClass}>
-            <FaUser className="text-accent" />
-            Profile
+          <NavLink
+            to="/dashboard/profile"
+            className={linkClass}
+            data-tip="Profile"
+          >
+            <FaUser className="text-accent text-lg shrink-0" />
+
+            <span className="is-drawer-close:hidden">Profile</span>
           </NavLink>
         </li>
 
-        {/* DONOR */}
         {role === "donor" && (
           <>
             <li>
               <NavLink
                 to="/dashboard/create-donation-request"
                 className={linkClass}
+                data-tip="Create Request"
               >
-                <FaHandHoldingMedical className="text-accent" />
-                Create Request
+                <FaHandHoldingMedical className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">Create Request</span>
               </NavLink>
             </li>
 
@@ -47,28 +63,39 @@ const DashboardSidebar = () => {
               <NavLink
                 to="/dashboard/my-donation-request"
                 className={linkClass}
+                data-tip="My Requests"
               >
-                <FaHeartbeat className="text-accent" />
-                My Requests
+                <FaHeartbeat className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">My Requests</span>
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/dashboard/funding" className={linkClass}>
-                <BiDonateHeart className="text-accent" />
-                Funding
+              <NavLink
+                to="/dashboard/funding"
+                className={linkClass}
+                data-tip="Funding"
+              >
+                <BiDonateHeart className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">Funding</span>
               </NavLink>
             </li>
           </>
         )}
 
-        {/* ADMIN */}
         {role === "admin" && (
           <>
             <li>
-              <NavLink to="/dashboard/all-users" className={linkClass}>
-                <FaUsers className="text-accent" />
-                All Users
+              <NavLink
+                to="/dashboard/all-users"
+                className={linkClass}
+                data-tip="All Users"
+              >
+                <FaUsers className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">All Users</span>
               </NavLink>
             </li>
 
@@ -76,35 +103,51 @@ const DashboardSidebar = () => {
               <NavLink
                 to="/dashboard/all-donation-request"
                 className={linkClass}
+                data-tip="All Requests"
               >
-                <FaHeartbeat className="text-accent" />
-                All Requests
+                <FaHeartbeat className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">All Requests</span>
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/dashboard/funding" className={linkClass}>
-                <BiDonateHeart className="text-accent" />
-                Funding
+              <NavLink
+                to="/dashboard/funding"
+                className={linkClass}
+                data-tip="Funding"
+              >
+                <BiDonateHeart className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">Funding</span>
               </NavLink>
             </li>
           </>
         )}
 
-        {/* VOLUNTEER */}
         {role === "volunteer" && (
           <>
             <li>
-              <NavLink to="/dashboard/all-requests" className={linkClass}>
-                <FaHeartbeat className="text-accent" />
-                All Requests
+              <NavLink
+                to="/dashboard/all-requests"
+                className={linkClass}
+                data-tip="All Requests"
+              >
+                <FaHeartbeat className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">All Requests</span>
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/dashboard/funding" className={linkClass}>
-                <BiDonateHeart className="text-accent" />
-                Funding
+              <NavLink
+                to="/dashboard/funding"
+                className={linkClass}
+                data-tip="Funding"
+              >
+                <BiDonateHeart className="text-accent text-lg shrink-0" />
+
+                <span className="is-drawer-close:hidden">Funding</span>
               </NavLink>
             </li>
           </>
