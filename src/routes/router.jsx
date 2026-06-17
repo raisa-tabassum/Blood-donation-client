@@ -15,6 +15,7 @@ import AllBloodDonationRequest from "../pages/Dashboard/Admin/AllBloodDonationRe
 import AuthLayout from "../layouts/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import DonationRequestDetails from "../pages/DonationRequestDetails/DonationRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -66,9 +67,18 @@ export const router = createBrowserRouter([
         Component: CreateDonationRequest,
       },
       {
+        path: "donation-requests",
+        Component: CreateDonationRequest,
+      },
+      {
+        path: "donation-requests/:id",
+        Component: DonationRequestDetails,
+      },
+      {
         path: "my-donation-request",
         Component: MyDonationRequests,
       },
+      
       {
         path: "funding",
         Component: Funding,
@@ -83,7 +93,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-donation-request",
-        Component: AllBloodDonationRequest,
+        element: (
+          <AdminRoute>
+            <AllBloodDonationRequest></AllBloodDonationRequest>
+          </AdminRoute>
+        ),
       },
     ],
   },

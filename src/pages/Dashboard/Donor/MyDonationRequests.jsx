@@ -2,8 +2,15 @@ import { useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import Table from "../../../components/ui/Table/Table";
 import TableHeader from "../../../components/ui/Table/TableHeader";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router";
 
 const MyDonationRequests = () => {
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("all");
+
   const getStatusClass = (status) => {
     switch (status) {
       case "pending":
@@ -22,26 +29,23 @@ const MyDonationRequests = () => {
         return "badge";
     }
   };
-  const [status, setStatus] = useState("");
 
-  const requests = [
-    {
-      id: 1,
-      recipient: "Rahim Uddin",
-      location: "Dhaka, Dhamrai",
-      bloodGroup: "A+",
-      date: "10 June 2026",
-      status: "pending",
+  const { data: requests = [], isPending } = useQuery({
+    queryKey: ["my-donation-requests", status],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/my-donation-requests?status=${status}`,
+      );
+      return res.data;
     },
-    {
-      id: 2,
-      recipient: "Karim Hasan",
-      location: "Gazipur, Kaliganj",
-      bloodGroup: "B+",
-      date: "15 June 2026",
-      status: "done",
-    },
-  ];
+  });
+  if (isPending) {
+    return (
+      <div className="flex justify-center py-20">
+        <span className="loading loading-spinner text-primary loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -59,11 +63,11 @@ const MyDonationRequests = () => {
             onChange={(e) => setStatus(e.target.value)}
             className="select select-bordered rounded-xl"
           >
-            <option>All Status</option>
-            <option>Pending</option>
-            <option>Inprogress</option>
-            <option>Done</option>
-            <option>Canceled</option>
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+            <option value="canceled">Canceled</option>
           </select>
         </div>
       </div>
@@ -81,26 +85,53 @@ const MyDonationRequests = () => {
         />
 
         <tbody>
-          {requests.map((request) => (
-            <tr key={request.id}>
-              <td>{request.recipient}</td>
-              <td>{request.location}</td>
-              <td>
-                <span className="badge badge-error text-white">
-                  {request.bloodGroup}
-                </span>
-              </td>
-              <td>{request.date}</td>
-              <td>
-                <span className={getStatusClass(request.status)}>
-                  {request.status}
-                </span>
-              </td>
-              <td>
-                <button className="btn btn-sm custom-btn-outline">View</button>
+          {requests.length === 0 ? (
+            <tr>
+              <td
+                colSpan="6"
+                className="text-center text-lg text-primary font-semibold py-10"
+              >
+                No Donation Requests Found
               </td>
             </tr>
-          ))}
+          ) : (
+            requests.map((request) => (
+              <tr key={request._id}>
+                <td>{request.recipientName}</td>
+
+                <td>
+                  {request.district}, {request.upazila}
+                </td>
+
+                <td>
+                  <span className="badge badge-error text-white">
+                    {request.bloodGroup}
+                  </span>
+                </td>
+
+                <td>{request.donationDate}</td>
+
+                <td>
+                  <span className={getStatusClass(request.requestStatus)}>
+                    {request.requestStatus}
+                  </span>
+                </td>
+
+                <td>
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/dashboard/donation-requests/${request._id}`,
+                      )
+                    }
+                    className="btn btn-sm custom-btn-outline"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </Table>
     </div>

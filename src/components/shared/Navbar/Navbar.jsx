@@ -22,7 +22,7 @@ const Navbar = () => {
       return res.data;
     },
   });
-  console.log("dbUser:", dbUser);
+  // console.log("dbUser:", dbUser);
 
   const [dark, setDark] = useState(false);
   const handleTheme = () => {

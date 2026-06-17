@@ -2,11 +2,11 @@ import { NavLink } from "react-router";
 import { FaHeartbeat, FaHome, FaUser } from "react-icons/fa";
 import { BiDonateHeart } from "react-icons/bi";
 import { FaHandHoldingMedical, FaUsers } from "react-icons/fa6";
+import useRole from "../../../hooks/useRole";
 // import useRole from "../../../hooks/useRole";
 
 const DashboardSidebar = () => {
-  const role = "admin";
-  // const { role } = useRole();
+  const { role } = useRole();
 
   const linkClass = ({ isActive }) =>
     `flex items-center font-semibold gap-3 px-4 py-3 rounded-lg transition-all is-drawer-close:tooltip is-drawer-close:tooltip-right
@@ -129,7 +129,7 @@ const DashboardSidebar = () => {
           <>
             <li>
               <NavLink
-                to="/dashboard/all-requests"
+                to="/dashboard/all-donation-request"
                 className={linkClass}
                 data-tip="All Requests"
               >

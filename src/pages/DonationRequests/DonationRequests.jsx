@@ -5,34 +5,19 @@ import { NavLink } from "react-router";
 import Card from "../../components/shared/Card/Card";
 import Table from "../../components/ui/Table/Table";
 import TableHeader from "../../components/ui/Table/TableHeader";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const DonationRequests = () => {
-  const requests = [
-    {
-      id: 1,
-      recipient: "Rahim Ahmed",
-      location: "Dhaka, Dhamrai",
-      bloodGroup: "A+",
-      date: "15 Aug 2026",
-      time: "10:00 AM",
+  const axiosSecure = useAxiosSecure();
+
+  const { data: requests = [] } = useQuery({
+    queryKey: ["donation-requests"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/donation-requests");
+      return res.data;
     },
-    {
-      id: 2,
-      recipient: "Karim Hasan",
-      location: "Gazipur, Kaliganj",
-      bloodGroup: "O-",
-      date: "18 Aug 2026",
-      time: "03:30 PM",
-    },
-    {
-      id: 3,
-      recipient: "Nusrat Jahan",
-      location: "Tangail, Mirzapur",
-      bloodGroup: "B+",
-      date: "20 Aug 2026",
-      time: "09:00 AM",
-    },
-  ];
+  });
 
   return (
     <section className="min-h-screen bg-[#FFF8EE] px-4 py-16">
@@ -64,21 +49,23 @@ const DonationRequests = () => {
 
           <tbody>
             {requests.map((request) => (
-              <tr key={request.id}>
-                <td>{request.recipient}</td>
-                <td>{request.location}</td>
+              <tr key={request._id}>
+                <td>{request.recipientName}</td>
+                <td>
+                  {request.district}
+                </td>
                 <td>
                   <span className="badge badge-error text-white">
                     {request.bloodGroup}
                   </span>
                 </td>
-                <td>{request.date}</td>
-                <td>{request.time}</td>
+                <td>{request.donationDate}</td>
+                <td>{request.donationTime}</td>
 
                 <td>
                   <NavLink
-                    to={`/donation-request/${request.id}`}
-                    className="custom-btn-primary"
+                    to={`/dashboard/donation-requests/${request._id}`}
+                    className="custom-btn-outline"
                   >
                     View
                   </NavLink>
@@ -92,15 +79,20 @@ const DonationRequests = () => {
       {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
         {requests.map((request) => (
-          <Card key={request.id} className="bg-white rounded-2xl shadow-md p-6">
+          <Card
+            key={request._id}
+            className="bg-white rounded-2xl shadow-md p-6"
+          >
             <h3 className="heading-font text-xl font-semibold text-accent">
-              {request.recipient}
+              {request.recipientName}
             </h3>
 
             <div className="space-y-3 mt-4 text-neutral">
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt className="text-primary" />
-                <span>{request.location}</span>
+                <span>
+                  {request.district}
+                </span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -110,19 +102,19 @@ const DonationRequests = () => {
 
               <div className="flex items-center gap-2">
                 <FaCalendarDays className="text-primary" />
-                <span>{request.date}</span>
+                <span>{request.donationDate}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <FaClock className="text-primary" />
-                <span>{request.time}</span>
+                <span>{request.donationTime}</span>
               </div>
             </div>
 
             <div className="mt-6 flex">
               <NavLink
-                to={`/donation-request/${request.id}`}
-                className="custom-btn-primary"
+                to={`/dashboard/donation-requests/${request._id}`}
+                className="custom-btn-outline"
               >
                 View Details
               </NavLink>
