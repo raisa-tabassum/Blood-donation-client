@@ -7,6 +7,7 @@ import Table from "../../components/ui/Table/Table";
 import TableHeader from "../../components/ui/Table/TableHeader";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useLocationData from "../../hooks/useLocationData";
 
 const DonationRequests = () => {
   const axiosSecure = useAxiosSecure();
@@ -51,9 +52,7 @@ const DonationRequests = () => {
             {requests.map((request) => (
               <tr key={request._id}>
                 <td>{request.recipientName}</td>
-                <td>
-                  {request.district}
-                </td>
+                <td>{request.district}</td>
                 <td>
                   <span className="badge badge-error text-white">
                     {request.bloodGroup}
@@ -90,9 +89,7 @@ const DonationRequests = () => {
             <div className="space-y-3 mt-4 text-neutral">
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt className="text-primary" />
-                <span>
-                  {request.district}
-                </span>
+                <span>{request.district}</span>
               </div>
 
               <div className="flex items-center gap-2">

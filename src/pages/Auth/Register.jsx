@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { inputClass, selectClass } from "../../styles/formStyles";
 import Card from "../../components/shared/Card/Card";
+import useLocationData from "../../hooks/useLocationData";
 
 const Register = () => {
   const {
@@ -19,6 +20,7 @@ const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { districts, upazilas } = useLocationData();
 
   const handleRegistration = async (data) => {
     try {
@@ -108,14 +110,14 @@ const Register = () => {
               className={selectClass}
             >
               <option value="">Select Blood Group</option>
-              <option>A+</option>
-              <option>A-</option>
-              <option>B+</option>
-              <option>B-</option>
-              <option>AB+</option>
-              <option>AB-</option>
-              <option>O+</option>
-              <option>O-</option>
+              <option value='A+'>A+</option>
+              <option value='A-'>A-</option>
+              <option value='B+'>B+</option>
+              <option value='B-'>B-</option>
+              <option value='AB+'>AB+</option>
+              <option value='AB-'>AB-</option>
+              <option value='O+'>O+</option>
+              <option value='O-'>O-</option>
             </select>
             {/* District */}
             <select
@@ -125,8 +127,11 @@ const Register = () => {
               className="select select-bordered rounded-2xl w-full"
             >
               <option value="">Select District</option>
-              <option value="Dhaka">Dhaka</option>
-              <option value="Gazipur">Gazipur</option>
+              {districts.map((district) => (
+                <option key={district.id} value={district.id}>
+                  {district.name}
+                </option>
+              ))}
             </select>
             {/* Upazila */}
             <select
@@ -136,8 +141,11 @@ const Register = () => {
               className="select select-bordered rounded-2xl w-full"
             >
               <option value="">Select Upazila</option>
-              <option value="Dhaka">Dhaka</option>
-              <option value="Gazipur">Gazipur</option>
+              {upazilas.map((upazila) => (
+                <option key={upazila.id} value={upazila.name}>
+                  {upazila.name}
+                </option>
+              ))}
             </select>
             {/* Email */}
             <input

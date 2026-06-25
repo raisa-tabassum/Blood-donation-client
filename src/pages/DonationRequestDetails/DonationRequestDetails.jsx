@@ -10,6 +10,7 @@ import {
   textareaClass,
 } from "../../styles/formStyles";
 import useAuth from "../../hooks/useAuth";
+import useLocationData from "../../hooks/useLocationData";
 
 const DonationRequestDetails = () => {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ const DonationRequestDetails = () => {
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const { register, handleSubmit } = useForm();
+  const { districts, upazilas } = useLocationData();
 
   const {
     data: request = {},
@@ -243,9 +245,11 @@ const DonationRequestDetails = () => {
               <option value="" disabled>
                 Select District
               </option>
-              <option value="Dhaka">Dhaka</option>
-              <option>Gazipur</option>
-              <option>Tangail</option>
+              {districts.map((district) => (
+                <option key={district.id} value={district.id}>
+                  {district.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -265,9 +269,11 @@ const DonationRequestDetails = () => {
               <option value="" disabled>
                 Select Upazila
               </option>
-              <option value="Dhamrai">Dhamrai</option>
-              <option>Savar</option>
-              <option>Kaliganj</option>
+              {upazilas.map((upazila) => (
+                <option key={upazila.id} value={upazila.name}>
+                  {upazila.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -422,7 +428,7 @@ const DonationRequestDetails = () => {
             <button
               type="button"
               onClick={() => handleStatusUpdate("canceled")}
-              className="btn btn-warning"
+              className="btn btn-warning text-accent"
             >
               Cancel
             </button>

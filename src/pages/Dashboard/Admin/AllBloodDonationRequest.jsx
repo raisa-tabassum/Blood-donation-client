@@ -2,27 +2,81 @@ import { useState } from "react";
 import { FaEye, FaEdit, FaTrash, FaFilter } from "react-icons/fa";
 import Table from "../../../components/ui/Table/Table";
 import TableHeader from "../../../components/ui/Table/TableHeader";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router";
+import Swal from "sweetalert2";
+import useLocationData from "../../../hooks/useLocationData";
 
 const AllBloodDonationRequest = () => {
-  // const getStatusClass = (status) => {
-  //   switch (status) {
-  //     case "pending":
-  //       return "badge badge-warning text-white";
+  const { id } = useParams();
+  const [status, setStatus] = useState("");
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
-  //     case "inprogress":
-  //       return "badge badge-info text-white";
+  const {
+    data: requests = [],
+    isPending,
+    refetch,
+  } = useQuery({
+    queryKey: ["all-donation-requests", status],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/all-donation-requests?status=${status}`,
+      );
+      return res.data;
+    },
+  });
+  if (isPending) {
+    return (
+      <div className="flex justify-center py-20">
+        <span className="loading loading-spinner text-primary loading-lg"></span>
+      </div>
+    );
+  }
 
-  //     case "done":
-  //       return "badge badge-success text-white";
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Delete Request?",
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    });
 
-  //     case "canceled":
-  //       return "badge badge-error text-white";
+    if (!result.isConfirmed) return;
 
-  //     default:
-  //       return "badge";
-  //   }
-  // };
-  // const [status, setStatus] = useState("");
+    const res = await axiosSecure.delete(`/donation-requests/${id}`);
+
+    if (res.data.deletedCount) {
+      Swal.fire({
+        icon: "success",
+        title: "Request Deleted Successfully",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+      refetch();
+    }
+  };
+
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "pending":
+        return "badge badge-warning text-white";
+
+      case "inprogress":
+        return "badge badge-info text-white";
+
+      case "done":
+        return "badge badge-success text-white";
+
+      case "canceled":
+        return "badge badge-error text-white";
+
+      default:
+        return "badge";
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -36,15 +90,15 @@ const AllBloodDonationRequest = () => {
           <FaFilter className="text-primary" />
 
           <select
-            // value={status}
-            // onChange={(e) => setStatus(e.target.value)}
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
             className="select select-bordered rounded-xl"
           >
-            <option>All Status</option>
-            <option>Pending</option>
-            <option>Inprogress</option>
-            <option>Done</option>
-            <option>Canceled</option>
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="inprogress">Inprogress</option>
+            <option value="done">Done</option>
+            <option value="canceled">Canceled</option>
           </select>
         </div>
       </div>
@@ -52,77 +106,75 @@ const AllBloodDonationRequest = () => {
       {/* Table */}
       <Table className="overflow-x-auto shadow-md">
         <TableHeader
-          columns={["Recipient", "Location", "Blood Group", "Date", "Time", "Status" ," Requester", "Actions"]}
+          columns={[
+            "Recipient",
+            "Location",
+            "Blood Group",
+            "Date",
+            "Time",
+            "Status",
+            " Requester",
+            "Actions",
+          ]}
         />
         <tbody>
-          <tr>
-            <td>Rahim Uddin</td>
-            <td>Dhaka, Dhamrai</td>
-            <td>
-              <span className="badge badge-error text-white">A+</span>
-            </td>
-            <td>15 Jun 2026</td>
-            <td>10:30 AM</td>
+          {requests.length === 0 ? (
+            <tr>
+              <td
+                colSpan="8"
+                className="text-center text-lg text-primary font-semibold py-10"
+              >
+                No Donation Requests Found
+              </td>
+            </tr>
+          ) : (
+            requests.map((request) => (
+              <tr key={request._id}>
+                <td>{request.recipientName}</td>
+                <td>
+                  {request.district}, {request.upazila}
+                </td>
 
-            <td>
-              {/* <span className={getStatusClass(request.status)}>
-                  {request.status}
-                </span> */}
-              <span className="badge badge-warning text-white">Pending</span>
-            </td>
+                <td>
+                  <span className="badge badge-error text-white">
+                    {request.bloodGroup}
+                  </span>
+                </td>
 
-            <td>Raisa Tabassum</td>
+                <td>{request.donationDate}</td>
+                <td>{request.donationTime}</td>
 
-            <td>
-              <div className="flex gap-2">
-                <button className="btn btn-sm btn-info text-white">
-                  <FaEye />
-                </button>
+                <td>
+                  <span className={getStatusClass(request.requestStatus)}>
+                    {request.requestStatus}
+                  </span>
+                </td>
 
-                <button className="btn btn-sm btn-warning text-white">
-                  <FaEdit />
-                </button>
+                <td>{request.requesterName}</td>
 
-                <button className="btn btn-sm btn-error text-white">
-                  <FaTrash />
-                </button>
-              </div>
-            </td>
-          </tr>
+                <td>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() =>
+                        navigate(`/dashboard/donation-requests/${request._id}`)
+                      }
+                      className="btn btn-sm custom-btn-outline"
+                    >
+                      <FaEye />
+                    </button>
 
-          <tr>
-            <td>Karim Hasan</td>
-            <td>Gazipur, Kaliganj</td>
-
-            <td>
-              <span className="badge badge-error text-white">O+</span>
-            </td>
-
-            <td>18 Jun 2026</td>
-            <td>03:00 PM</td>
-
-            <td>
-              <span className="badge badge-success text-white">Done</span>
-            </td>
-
-            <td>Nusrat Jahan</td>
-
-            <td>
-              <div className="flex gap-2">
-                <button className="btn btn-sm btn-info text-white">
-                  <FaEye />
-                </button>
-
-                <button className="btn btn-sm btn-warning text-white">
-                  <FaEdit />
-                </button>
-
-                <button className="btn btn-sm btn-error text-white">
-                  <FaTrash />
-                </button>
-              </div>
-            </td>
-          </tr>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(request._id)}
+                      className="btn btn-sm custom-btn-primary"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </Table>
     </div>

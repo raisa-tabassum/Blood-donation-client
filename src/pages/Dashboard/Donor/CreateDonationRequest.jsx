@@ -10,6 +10,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import useLocationData from "../../../hooks/useLocationData";
 
 const CreateDonationRequest = () => {
   const {
@@ -22,6 +23,7 @@ const CreateDonationRequest = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const { districts, upazilas } = useLocationData();
 
   const { data: dbUser = {} } = useQuery({
     queryKey: ["user", user?.email],
@@ -158,9 +160,11 @@ const CreateDonationRequest = () => {
                 <option value="" disabled>
                   Select District
                 </option>
-                <option value="Dhaka">Dhaka</option>
-                <option>Gazipur</option>
-                <option>Tangail</option>
+                {districts.map((district) => (
+                  <option key={district.id} value={district.id}>
+                    {district.name}
+                  </option>
+                ))}
               </select>
               {errors.district && (
                 <p className="text-primary text-sm">
@@ -184,9 +188,11 @@ const CreateDonationRequest = () => {
                 <option value="" disabled>
                   Select Upazila
                 </option>
-                <option value="Dhamrai">Dhamrai</option>
-                <option>Savar</option>
-                <option>Kaliganj</option>
+                {upazilas.map((upazila) => (
+                  <option key={upazila.id} value={upazila.name}>
+                    {upazila.name}
+                  </option>
+                ))}
               </select>
               {errors.upazila && (
                 <p className="text-primary text-sm">{errors.upazila.message}</p>

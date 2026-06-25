@@ -5,6 +5,7 @@ import TableHeader from "../../../components/ui/Table/TableHeader";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
+import useLocationData from "../../../hooks/useLocationData";
 
 const MyDonationRequests = () => {
   const axiosSecure = useAxiosSecure();
@@ -120,9 +121,7 @@ const MyDonationRequests = () => {
                 <td>
                   <button
                     onClick={() =>
-                      navigate(
-                        `/dashboard/donation-requests/${request._id}`,
-                      )
+                      navigate(`/dashboard/donation-requests/${request._id}`)
                     }
                     className="btn btn-sm custom-btn-outline"
                   >

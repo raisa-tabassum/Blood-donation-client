@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { inputClass, selectClass } from "../../../styles/formStyles";
+import useLocationData from "../../../hooks/useLocationData";
 
 const Profile = () => {
   const { user } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-  const { data: dbUser = {} } = useQuery({
+  const { data: dbUser = {}, refetch } = useQuery({
     queryKey: ["user", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -17,6 +18,48 @@ const Profile = () => {
       return res.data;
     },
   });
+
+  // form state add
+  const [formData, setFormData] = useState({
+    name: "",
+    bloodGroup: "",
+    district: "",
+    upazila: "",
+    avatar: "",
+  });
+  // db data state
+  useEffect(() => {
+    if (dbUser?._id) {
+      setFormData({
+        name: dbUser?.name || "",
+        bloodGroup: dbUser?.bloodGroup || "",
+        district: dbUser?.district || "",
+        upazila: dbUser?.upazila || "",
+        avatar: dbUser?.avatar || "",
+      });
+    }
+  }, [dbUser]);
+
+  // common input handler
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // save handler add
+  const handleSave = async () => {
+    try {
+      await axiosSecure.patch(`/users/${dbUser._id}`, formData);
+
+      refetch();
+      setEditMode(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -27,7 +70,7 @@ const Profile = () => {
             My Profile
           </h2>
           <button
-            onClick={() => setEditMode(!editMode)}
+            onClick={editMode ? handleSave : () => setEditMode(true)}
             className="custom-btn-primary"
           >
             {editMode ? "Save Changes" : "Edit Profile"}
@@ -53,8 +96,11 @@ const Profile = () => {
             </label>
             <input
               type="text"
+              name="name"
+              value={formData.name}
               defaultValue={dbUser?.name}
               disabled={!editMode}
+              onChange={handleChange}
               className={inputClass}
             />
           </div>
@@ -78,7 +124,10 @@ const Profile = () => {
 
             <select
               defaultValue={dbUser?.bloodGroup}
+              name="bloodGroup"
+              value={formData.bloodGroup}
               disabled={!editMode}
+              onChange={handleChange}
               className={selectClass}
             >
               <option value="A+">A+</option>
