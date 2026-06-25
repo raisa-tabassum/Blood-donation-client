@@ -78,7 +78,6 @@ export const router = createBrowserRouter([
         path: "my-donation-request",
         Component: MyDonationRequests,
       },
-      
       {
         path: "funding",
         Component: Funding,
@@ -92,7 +91,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "all-donation-request",
+        path: "all-donation-requests",
         element: (
           <AdminRoute>
             <AllBloodDonationRequest></AllBloodDonationRequest>

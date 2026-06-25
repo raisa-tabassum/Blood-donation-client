@@ -1,15 +1,13 @@
 import { useState } from "react";
-import { FaEye, FaEdit, FaTrash, FaFilter } from "react-icons/fa";
+import { FaEye, FaTrash, FaFilter } from "react-icons/fa";
 import Table from "../../../components/ui/Table/Table";
 import TableHeader from "../../../components/ui/Table/TableHeader";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import useLocationData from "../../../hooks/useLocationData";
 
 const AllBloodDonationRequest = () => {
-  const { id } = useParams();
   const [status, setStatus] = useState("");
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();

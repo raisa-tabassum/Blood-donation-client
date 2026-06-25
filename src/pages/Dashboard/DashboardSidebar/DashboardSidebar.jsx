@@ -101,7 +101,7 @@ const DashboardSidebar = () => {
 
             <li>
               <NavLink
-                to="/dashboard/all-donation-request"
+                to="/dashboard/all-donation-requests"
                 className={linkClass}
                 data-tip="All Requests"
               >
