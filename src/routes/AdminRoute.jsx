@@ -13,6 +13,7 @@ const AdminRoute = ({ children }) => {
         <span className="loading loading-spinner text-primary loading-lg"></span>
       </div>
     );
+    
   }
   if (role !== "admin") {
     return <Forbidden></Forbidden>;

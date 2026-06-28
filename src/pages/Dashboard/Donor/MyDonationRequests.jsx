@@ -66,11 +66,10 @@ const MyDonationRequests = () => {
 
           <select
             value={status}
-            onChange={(e) => {
+onChange={(e) => {
               setStatus(e.target.value);
               setCurrentPage(1);
-            }}
-            className="select select-bordered rounded-xl"
+            }}            className="select select-bordered rounded-xl"
           >
             <option value="all">All Status</option>
             <option value="pending">Pending</option>
@@ -143,35 +142,35 @@ const MyDonationRequests = () => {
       </Table>
 
       {/* pagination */}
-      <div className="flex justify-center mt-8 gap-2 flex-wrap">
-        <button
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage(currentPage - 1)}
-          className="btn btn-sm"
-        >
-          Prev
-        </button>
-
-        {[...Array(totalPages).keys()].map((page) => (
+        <div className="flex justify-center mt-8 gap-2 flex-wrap">
           <button
-            key={page}
-            onClick={() => setCurrentPage(page + 1)}
-            className={`btn custom-btn-outline btn-sm ${
-              currentPage === page + 1 ? "btn-primary" : ""
-            }`}
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn btn-sm"
           >
-            {page + 1}
+            Prev
           </button>
-        ))}
 
-        <button
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage(currentPage + 1)}
-          className="btn btn-sm"
-        >
-          Next
-        </button>
-      </div>
+          {[...Array(totalPages).keys()].map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page + 1)}
+              className={`btn custom-btn-outline btn-sm ${
+                currentPage === page + 1 ? "btn-primary" : ""
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn btn-sm"
+          >
+            Next
+          </button>
+        </div>
     </div>
   );
 };
