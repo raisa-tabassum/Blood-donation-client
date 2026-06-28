@@ -39,6 +39,7 @@ const CreateDonationRequest = () => {
 
     const donationRequest = {
       requesterName: dbUser.name,
+      requesterEmail: dbUser.email,
 
       recipientName: data.recipientName,
       district: data.district,
@@ -74,7 +75,7 @@ const CreateDonationRequest = () => {
         timer: 1500,
         showConfirmButton: false,
       });
-      navigate("/dashboard/my-donation-request");
+      navigate("/dashboard/my-donation-requests");
     }
   };
 
@@ -161,7 +162,7 @@ const CreateDonationRequest = () => {
                   Select District
                 </option>
                 {districts.map((district) => (
-                  <option key={district.id} value={district.id}>
+                  <option key={district.id} value={district.name}>
                     {district.name}
                   </option>
                 ))}

@@ -60,7 +60,7 @@ const DashboardHeader = () => {
             {dbUser?.name || "User"}
           </h4>
 
-          <p className="text-xs text-gray-400">Donor</p>
+          <p className="text-xs text-gray-400">{dbUser?.role}</p>
         </div>
 
         <img

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarDays, FaClock, FaDroplet } from "react-icons/fa6";
 import { NavLink } from "react-router";
@@ -7,21 +7,27 @@ import Table from "../../components/ui/Table/Table";
 import TableHeader from "../../components/ui/Table/TableHeader";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import useLocationData from "../../hooks/useLocationData";
 
 const DonationRequests = () => {
   const axiosSecure = useAxiosSecure();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  const { data: requests = [] } = useQuery({
-    queryKey: ["donation-requests"],
+  const { data = {} } = useQuery({
+    queryKey: ["donation-requests", currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get("/donation-requests");
+      const res = await axiosSecure.get(
+        `/donation-requests?page=${currentPage}&limit=${itemsPerPage}`,
+      );
       return res.data;
     },
   });
 
+  const requests = data.requests || [];
+  const totalPages = data.totalPages || 1;
+
   return (
-    <section className="min-h-screen bg-[#FFF8EE] px-4 py-16">
+    <section className="min-h-screen bg-[#FFFBF5] px-4 py-16">
       {/* Heading */}
       <div className="text-center mb-12">
         <h2 className="heading-font text-3xl md:text-5xl font-bold text-accent">
@@ -47,7 +53,6 @@ const DonationRequests = () => {
               "Actions",
             ]}
           />
-
           <tbody>
             {requests.map((request) => (
               <tr key={request._id}>
@@ -118,6 +123,37 @@ const DonationRequests = () => {
             </div>
           </Card>
         ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-8 gap-2 flex-wrap">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className="btn btn-sm"
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page + 1)}
+            className={`btn custom-btn-outline btn-sm ${
+              currentPage === page + 1 ? "custom-btn-primary" : ""
+            }`}
+          >
+            {page + 1}
+          </button>
+        ))}
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className="btn btn-sm"
+        >
+          Next
+        </button>
       </div>
     </section>
   );

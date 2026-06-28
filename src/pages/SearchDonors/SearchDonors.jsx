@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 const SearchDonors = () => {
   const { districts, upazilas } = useLocationData();
   const axiosSecure = useAxiosSecure();
-  const [status, setStatus] = useState("");
 
   const [bloodGroup, setBloodGroup] = useState("");
   const [district, setDistrict] = useState("");
@@ -52,7 +51,7 @@ const SearchDonors = () => {
           {/* Blood Group */}
           <select
             value={bloodGroup}
-            onChange={(e) => setDistrict(e.target.value)}
+            onChange={(e) => setBloodGroup(e.target.value)}
             className="select select-bordered rounded-2xl w-full"
           >
             <option disabled selected>
@@ -119,7 +118,7 @@ const SearchDonors = () => {
             </p>
           ) : (
             donors.map((donor) => (
-              <Card key={donor._id}>
+              <Card key={donor._id} className="max-w-sm">
                 <img
                   src={donor.avatar}
                   alt={donor.name}
@@ -144,7 +143,7 @@ const SearchDonors = () => {
                   </div>
                 </div>
 
-                <button className="custom-btn-primary mt-5 w-full">
+                <button className="custom-btn-outline mt-5 w-full">
                   View Profile
                 </button>
               </Card>

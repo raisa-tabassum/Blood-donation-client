@@ -114,7 +114,7 @@ const DonationRequestDetails = () => {
         showConfirmButton: false,
       });
 
-      navigate("/dashboard/my-donation-request");
+      navigate("/dashboard/my-donation-requests");
     }
   };
 
@@ -135,7 +135,7 @@ const DonationRequestDetails = () => {
   if (isPending) {
     return (
       <div className="flex justify-center py-20">
-        <span className="loading loading-spinner loading-lg"></span>
+        <span className="loading loading-spinner text-primary loading-lg"></span>
       </div>
     );
   }
@@ -420,7 +420,7 @@ const DonationRequestDetails = () => {
             <button
               type="button"
               onClick={() => handleStatusUpdate("done")}
-              className="btn btn-success text-white"
+              className="btn btn-success text-white rounded-xl"
             >
               Mark As Done
             </button>
@@ -428,7 +428,7 @@ const DonationRequestDetails = () => {
             <button
               type="button"
               onClick={() => handleStatusUpdate("canceled")}
-              className="btn btn-warning text-accent"
+              className="btn custom-btn-outline"
             >
               Cancel
             </button>

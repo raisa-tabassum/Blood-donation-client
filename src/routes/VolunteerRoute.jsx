@@ -1,7 +1,6 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
-import Loading from "../components/shared/Loading/Loading";
 import Forbidden from "../components/shared/Forbidden/Forbidden";
 
 const VolunteerRoute = ({ children }) => {
@@ -9,7 +8,11 @@ const VolunteerRoute = ({ children }) => {
   const { role } = useRole();
 
   if (loading) {
-    return <Loading></Loading>;
+    return (
+      <div className="flex justify-center py-20">
+        <span className="loading loading-spinner text-primary text-primary loading-lg"></span>
+      </div>
+    );
   }
   if (role !== "volunteer") {
     return <Forbidden></Forbidden>;

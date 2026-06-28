@@ -16,16 +16,21 @@ import Swal from "sweetalert2";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const [status, setStatus] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  const { data: users = [], refetch } = useQuery({
-    queryKey: ["users", status],
+  const { data = {}, refetch } = useQuery({
+    queryKey: ["users", status, currentPage],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/users${status ? `?status=${status}` : ""}`,
+        `/users?status=${status}&page=${currentPage}&limit=${itemsPerPage}`,
       );
       return res.data;
     },
   });
+
+  const users = data.users || [];
+  const totalPages = data.totalPages || 1;
 
   const handleRoleUpdate = async (user, role) => {
     const result = await Swal.fire({
@@ -81,7 +86,10 @@ const AllUsers = () => {
           <FaFilter className="text-primary" />
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setCurrentPage(1);
+            }}
             className="select select-bordered rounded-xl"
           >
             <option value="">All Users</option>
@@ -90,7 +98,6 @@ const AllUsers = () => {
           </select>
         </div>
       </div>
-
       {/* Table */}
       <Table className="overflow-x-auto shadow-md">
         <TableHeader
@@ -190,6 +197,37 @@ const AllUsers = () => {
           ))}
         </tbody>
       </Table>
+
+      {/* pagination */}
+      <div className="flex justify-center mt-8 gap-2 flex-wrap">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className="btn btn-sm"
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page + 1)}
+            className={`btn custom-btn-outline btn-sm ${
+              currentPage === page + 1 ? "btn-primary" : ""
+            }`}
+          >
+            {page + 1}
+          </button>
+        ))}
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className="btn btn-sm"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

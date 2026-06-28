@@ -8,23 +8,28 @@ import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const AllBloodDonationRequest = () => {
-  const [status, setStatus] = useState("");
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const [status, setStatus] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const {
-    data: requests = [],
+    data = {},
     isPending,
     refetch,
   } = useQuery({
-    queryKey: ["all-donation-requests", status],
+    queryKey: ["all-blood-donation-request", status, currentPage],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/all-donation-requests?status=${status}`,
+        `/all-blood-donation-request?status=${status}&page=${currentPage}&limit=${itemsPerPage}`,
       );
       return res.data;
     },
   });
+  const requests = data.requests || [];
+  const totalPages = data.totalPages || 1;
+
   if (isPending) {
     return (
       <div className="flex justify-center py-20">
@@ -89,7 +94,10 @@ const AllBloodDonationRequest = () => {
 
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setCurrentPage(1);
+            }}
             className="select select-bordered rounded-xl"
           >
             <option value="">All Status</option>
@@ -175,6 +183,37 @@ const AllBloodDonationRequest = () => {
           )}
         </tbody>
       </Table>
+
+      {/* pagination */}
+      <div className="flex justify-center mt-8 gap-2 flex-wrap">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className="btn btn-sm"
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page + 1)}
+            className={`btn custom-btn-outline btn-sm ${
+              currentPage === page + 1 ? "btn-primary" : ""
+            }`}
+          >
+            {page + 1}
+          </button>
+        ))}
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className="btn btn-sm"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

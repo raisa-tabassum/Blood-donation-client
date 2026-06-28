@@ -4,7 +4,7 @@ import DashboardHeader from "../pages/Dashboard/DashboardHeader/DashboardHeader"
 
 const DashboardLayout = () => {
   return (
-    <div className="drawer lg:drawer-open bg-[#FCF9EA]">
+    <div className="drawer lg:drawer-open bg-[#FFFBF5]">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       {/* Main Content */}

@@ -3,7 +3,6 @@ import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { inputClass, selectClass } from "../../../styles/formStyles";
-import useLocationData from "../../../hooks/useLocationData";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -147,7 +146,7 @@ const Profile = () => {
             </label>
             <input
               type="text"
-              defaultValue="Dhaka"
+              defaultValue={dbUser?.district}
               disabled={!editMode}
               className={inputClass}
             />
@@ -159,7 +158,7 @@ const Profile = () => {
             </label>
             <input
               type="text"
-              defaultValue="Munshiganj"
+              defaultValue={dbUser?.upazila}
               disabled={!editMode}
               className={inputClass}
             />

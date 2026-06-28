@@ -5,12 +5,13 @@ import TableHeader from "../../../components/ui/Table/TableHeader";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router";
-import useLocationData from "../../../hooks/useLocationData";
 
 const MyDonationRequests = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [status, setStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const getStatusClass = (status) => {
     switch (status) {
@@ -31,15 +32,19 @@ const MyDonationRequests = () => {
     }
   };
 
-  const { data: requests = [], isPending } = useQuery({
-    queryKey: ["my-donation-requests", status],
+  const { data = {}, isPending } = useQuery({
+    queryKey: ["my-donation-requests", status, currentPage],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/my-donation-requests?status=${status}`,
+        `/my-donation-requests?status=${status}&page=${currentPage}&limit=${itemsPerPage}`,
       );
       return res.data;
     },
   });
+
+  const requests = data.requests || [];
+  const totalPages = data.totalPages || 1;
+
   if (isPending) {
     return (
       <div className="flex justify-center py-20">
@@ -61,7 +66,10 @@ const MyDonationRequests = () => {
 
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setCurrentPage(1);
+            }}
             className="select select-bordered rounded-xl"
           >
             <option value="all">All Status</option>
@@ -133,6 +141,37 @@ const MyDonationRequests = () => {
           )}
         </tbody>
       </Table>
+
+      {/* pagination */}
+      <div className="flex justify-center mt-8 gap-2 flex-wrap">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className="btn btn-sm"
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page + 1)}
+            className={`btn custom-btn-outline btn-sm ${
+              currentPage === page + 1 ? "btn-primary" : ""
+            }`}
+          >
+            {page + 1}
+          </button>
+        ))}
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className="btn btn-sm"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

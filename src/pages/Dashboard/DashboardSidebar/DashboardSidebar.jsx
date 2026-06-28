@@ -61,7 +61,7 @@ const DashboardSidebar = () => {
 
             <li>
               <NavLink
-                to="/dashboard/my-donation-request"
+                to="/dashboard/my-donation-requests"
                 className={linkClass}
                 data-tip="My Requests"
               >
@@ -101,7 +101,7 @@ const DashboardSidebar = () => {
 
             <li>
               <NavLink
-                to="/dashboard/all-donation-requests"
+                to="/dashboard/all-blood-donation-request"
                 className={linkClass}
                 data-tip="All Requests"
               >
@@ -129,7 +129,7 @@ const DashboardSidebar = () => {
           <>
             <li>
               <NavLink
-                to="/dashboard/all-donation-request"
+                to="/dashboard/all-blood-donation-request"
                 className={linkClass}
                 data-tip="All Requests"
               >
