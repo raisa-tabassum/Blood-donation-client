@@ -24,13 +24,13 @@ const AdminDashboardHome = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: stats = {}, isPending } = useQuery({
-      queryKey: ["admin-stats"],
-      queryFn: async () => {
-          const res = await axiosSecure.get("/admin-stats");
+    queryKey: ["admin-stats"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/admin-stats");
       return res.data;
     },
-});
-console.log(stats);
+  });
+  console.log(stats);
   if (isPending) {
     return (
       <div className="flex justify-center py-20">
